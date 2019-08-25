@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneroService } from 'src/app/_service/genero.service';
+import { Genero } from 'src/app/_model/genero';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-genero',
@@ -8,13 +10,16 @@ import { GeneroService } from 'src/app/_service/genero.service';
 })
 export class GeneroComponent implements OnInit {
 
+  dataSource: MatTableDataSource<Genero>;
+  displayedColumns: string[] = ['idGenero', 'nombre', 'acciones'];
+
   constructor(
     private generoService : GeneroService
   ) { }
 
   ngOnInit() {
     this.generoService.listar().subscribe(data => {
-      console.log(data);
+      this.dataSource = new MatTableDataSource(data);
     });  
   }
 
